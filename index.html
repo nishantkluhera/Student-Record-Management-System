@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Record Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-icon">🌙</span>
+    </button>
+
+    <div class="container">
+        <header class="header">
+            <h1>Student Record Management</h1>
+            <p>Manage student records efficiently and securely</p>
+        </header>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <nav class="nav">
+                    <button class="nav-btn active" data-section="dashboard">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
+                    </button>
+                    <button class="nav-btn" data-section="add-student">
+                        <span class="nav-icon">➕</span>
+                        Add Student
+                    </button>
+                    <button class="nav-btn" data-section="view-students">
+                        <span class="nav-icon">👥</span>
+                        View Students
+                    </button>
+                    <button class="nav-btn" data-section="reports">
+                        <span class="nav-icon">📈</span>
+                        Reports
+                    </button>
+                    <button class="nav-btn" data-section="cpp-code">
+                        <span class="nav-icon">💻</span>
+                        C++ Code
+                    </button>
+                </nav>
+            </div>
+
+            <div class="content">
+                <!-- Dashboard Section -->
+                <section class="section active" id="dashboard">
+                    <h2>Dashboard</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Total Students</h3>
+                            <p class="stat-number" id="total-students">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Average Grade</h3>
+                            <p class="stat-number" id="average-grade">0.0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Highest Score</h3>
+                            <p class="stat-number" id="highest-score">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Lowest Score</h3>
+                            <p class="stat-number" id="lowest-score">0</p>
+                        </div>
+                    </div>
+                    <div class="recent-activity">
+                        <h3>Recent Activity</h3>
+                        <div class="activity-list" id="activity-list">
+                            <p class="no-activity">No recent activity</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Add Student Section -->
+                <section class="section" id="add-student">
+                    <h2>Add New Student</h2>
+                    <form class="student-form" id="student-form">
+                        <div class="form-group">
+                            <label for="student-name">Student Name</label>
+                            <input type="text" id="student-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="roll-number">Roll Number</label>
+                            <input type="number" id="roll-number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="course">Course</label>
+                            <select id="course" required>
+                                <option value="">Select Course</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Mathematics">Mathematics</option>
+                                <option value="Physics">Physics</option>
+                                <option value="Chemistry">Chemistry</option>
+                                <option value="Biology">Biology</option>
+                                <option value="English">English</option>
+                                <option value="History">History</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="marks">Marks/Grade</label>
+                            <input type="number" id="marks" min="0" max="100" step="0.1" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Student</button>
+                    </form>
+                </section>
+
+                <!-- View Students Section -->
+                <section class="section" id="view-students">
+                    <div class="section-header">
+                        <h2>Student Records</h2>
+                        <div class="section-actions">
+                            <input type="text" id="search-input" placeholder="Search students...">
+                            <button class="btn btn-secondary" id="export-btn">Export Data</button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="students-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Roll No.</th>
+                                    <th>Email</th>
+                                    <th>Course</th>
+                                    <th>Marks</th>
+                                    <th>Grade</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="students-tbody">
+                                <tr class="no-records">
+                                    <td colspan="7">No students found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Reports Section -->
+                <section class="section" id="reports">
+                    <h2>Reports & Analytics</h2>
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <h3>Grade Distribution</h3>
+                            <div class="grade-chart" id="grade-chart">
+                                <div class="grade-bar" data-grade="A">
+                                    <span class="grade-label">A</span>
+                                    <div class="bar" style="width: 0%"></div>
+                                    <span class="grade-count">0</span>
+                                </div>
+                                <div class="grade-bar" data-grade="B">
+                                    <span class="grade-label">B</span>
+                                    <div class="bar" style="width: 0%"></div>
+                                    <span class="grade-count">0</span>
+                                </div>
+                                <div class="grade-bar" data-grade="C">
+                                    <span class="grade-label">C</span>
+                                    <div class="bar" style="width: 0%"></div>
+                                    <span class="grade-count">0</span>
+                                </div>
+                                <div class="grade-bar" data-grade="D">
+                                    <span class="grade-label">D</span>
+                                    <div class="bar" style="width: 0%"></div>
+                                    <span class="grade-count">0</span>
+                                </div>
+                                <div class="grade-bar" data-grade="F">
+                                    <span class="grade-label">F</span>
+                                    <div class="bar" style="width: 0%"></div>
+                                    <span class="grade-count">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="report-card">
+                            <h3>Course Performance</h3>
+                            <div class="course-stats" id="course-stats">
+                                <p>No data available</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- C++ Code Section -->
+                <section class="section" id="cpp-code">
+                    <h2>Original C++ Implementation</h2>
+                    <p class="cpp-intro">This web application is based on the original C++ terminal application. Here's the core implementation and comparison:</p>
+                    
+                    <div class="code-comparison">
+                        <div class="code-block">
+                            <h3>🔧 C++ Student Class</h3>
+                            <pre><code class="cpp-code">class Student {
+private:
+    std::string name;
+    int rollNumber;
+    double marks;
+    std::string course;
+    std::string email;
+    
+public:
+    // Constructor
+    Student(std::string n, int r, double m, 
+            std::string c, std::string e) 
+        : name(n), rollNumber(r), marks(m), 
+          course(c), email(e) {}
+    
+    // Getters
+    std::string getName() const { return name; }
+    int getRollNumber() const { return rollNumber; }
+    double getMarks() const { return marks; }
+    std::string getCourse() const { return course; }
+    std::string getEmail() const { return email; }
+    
+    // Calculate Grade
+    char calculateGrade() const {
+        if (marks >= 90) return 'A';
+        if (marks >= 80) return 'B';
+        if (marks >= 70) return 'C';
+        if (marks >= 60) return 'D';
+        return 'F';
+    }
+    
+    // Display function
+    void display() const {
+        std::cout << std::setw(15) << name 
+                  << std::setw(10) << rollNumber 
+                  << std::setw(8) << std::fixed 
+                  << std::setprecision(2) << marks
+                  << std::setw(15) << course
+                  << std::setw(8) << calculateGrade() 
+                  << std::endl;
+    }
+};</code></pre>
+                        </div>
+                        
+                        <div class="code-block">
+                            <h3>🌐 JavaScript Equivalent</h3>
+                            <pre><code class="js-code">class Student {
+    constructor(name, rollNumber, marks, course, email) {
+        this.id = this.generateId();
+        this.name = name;
+        this.rollNumber = rollNumber;
+        this.marks = marks;
+        this.course = course;
+        this.email = email;
+        this.grade = this.calculateGrade(marks);
+        this.dateAdded = new Date().toLocaleDateString();
+    }
+    
+    calculateGrade(marks) {
+        if (marks >= 90) return 'A';
+        if (marks >= 80) return 'B';
+        if (marks >= 70) return 'C';
+        if (marks >= 60) return 'D';
+        return 'F';
+    }
+    
+    generateId() {
+        return Date.now().toString(36) + 
+               Math.random().toString(36).substr(2);
+    }
+    
+    display() {
+        return `
+            &lt;tr&gt;
+                &lt;td&gt;${this.name}&lt;/td&gt;
+                &lt;td&gt;${this.rollNumber}&lt;/td&gt;
+                &lt;td&gt;${this.email}&lt;/td&gt;
+                &lt;td&gt;${this.course}&lt;/td&gt;
+                &lt;td&gt;${this.marks}&lt;/td&gt;
+                &lt;td&gt;${this.grade}&lt;/td&gt;
+            &lt;/tr&gt;
+        `;
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="cpp-features">
+                        <h3>🚀 Evolution: C++ → Web</h3>
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h4>📊 Data Storage</h4>
+                                <p><strong>C++:</strong> Vector in memory</p>
+                                <p><strong>Web:</strong> localStorage with JSON</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>🖥️ Interface</h4>
+                                <p><strong>C++:</strong> Terminal-based console</p>
+                                <p><strong>Web:</strong> Modern responsive UI</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>🔍 Search</h4>
+                                <p><strong>C++:</strong> Linear search through vector</p>
+                                <p><strong>Web:</strong> Real-time filtering</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>📈 Analytics</h4>
+                                <p><strong>C++:</strong> Basic statistics</p>
+                                <p><strong>Web:</strong> Interactive charts</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="compile-instructions">
+                        <h3>🔨 Compile & Run Original C++</h3>
+                        <div class="terminal-block">
+                            <pre><code class="bash-code"># Compile the original C++ version
+g++ -o student_manager Base-Terminal-Based/Basic-Terminal-Based-Version.cpp
+
+# Run the application
+./student_manager
+
+# Alternative with debugging symbols
+g++ -g -o student_manager_debug Base-Terminal-Based/Basic-Terminal-Based-Version.cpp</code></pre>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Student Modal -->
+    <div class="modal" id="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Student</h3>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <form class="student-form" id="edit-form">
+                <div class="form-group">
+                    <label for="edit-name">Student Name</label>
+                    <input type="text" id="edit-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-roll">Roll Number</label>
+                    <input type="number" id="edit-roll" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-email">Email Address</label>
+                    <input type="email" id="edit-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-phone">Phone Number</label>
+                    <input type="tel" id="edit-phone">
+                </div>
+                <div class="form-group">
+                    <label for="edit-course">Course</label>
+                    <select id="edit-course" required>
+                        <option value="">Select Course</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Biology">Biology</option>
+                        <option value="English">English</option>
+                        <option value="History">History</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-marks">Marks/Grade</label>
+                    <input type="number" id="edit-marks" min="0" max="100" step="0.1" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-edit">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
